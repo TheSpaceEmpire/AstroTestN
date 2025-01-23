@@ -1,0 +1,36 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Node.js
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+
+    # Step 3: Install dependencies
+    - name: Install Dependencies
+      run: npm install
+
+    # Step 4: Compile the contracts
+    - name: Compile Contracts
+      run: npx hardhat compile
+
+    # Step 5: Run tests
+    - name: Run Tests
+      run: npx hardhat test
